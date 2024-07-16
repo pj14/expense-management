@@ -20,7 +20,7 @@ export const menuItems = [
     link: "/dashboard",
   },
   {
-    id: 3,
+    id: 4,
     title: "Expenses",
     icon: expenses,
     link: "/dashboard",
