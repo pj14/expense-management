@@ -44,9 +44,56 @@ export const GlobalProvider = ({ children }) => {
     return total;
   }, [incomes]);
 
+  const addExpense = async (expense) => {
+    const response = await axios
+      .post(`${BASE_URL}add-expense`, expense)
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+    if (response?.status === 200) {
+      await getExpenses();
+    }
+  };
+
+  const getExpenses = async () => {
+    const response = await axios.get(`${BASE_URL}get-expenses`);
+    setExpenses(response.data);
+  };
+
+  const deleteExpense = async (id) => {
+    const response = await axios.delete(`${BASE_URL}delete-expense/${id}`);
+
+    if (response?.status === 200) {
+      getExpenses();
+    }
+  };
+
+  const totalExpense = useMemo(() => {
+    let total = 0;
+    console.log("Total Expense called");
+    expenses.forEach((expense) => {
+      total += expense?.amount;
+    });
+
+    return total;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expenses]);
+
   return (
     <GlobalContext.Provider
-      value={{ addIncome, getIncomes, incomes, deleteIncome, totalIncome }}
+      value={{
+        addIncome,
+        getIncomes,
+        incomes,
+        deleteIncome,
+        totalIncome,
+        expenses,
+        addExpense,
+        getExpenses,
+        deleteExpense,
+        totalExpense,
+        setError,
+      }}
     >
       {children}
     </GlobalContext.Provider>
