@@ -97,7 +97,7 @@ function Form() {
           bPad={".8rem 1.6rem"}
           bRad={"30px"}
           bg={"var(--color-accent"}
-          color={"#fff"}
+          color={"#ffffff"}
         />
       </div>
     </FormStyled>
