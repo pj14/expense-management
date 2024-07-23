@@ -79,6 +79,20 @@ export const GlobalProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expenses]);
 
+  const totalBalance = useMemo(() => {
+    return totalIncome - totalExpense;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [incomes, expenses]);
+
+  const transactionHistory = () => {
+    const history = [...incomes, ...expenses];
+    history?.sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+
+    return history.slice(0, 3);
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -93,6 +107,9 @@ export const GlobalProvider = ({ children }) => {
         deleteExpense,
         totalExpense,
         setError,
+        totalBalance,
+        transactionHistory,
+        error,
       }}
     >
       {children}
