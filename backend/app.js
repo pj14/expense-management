@@ -1,4 +1,6 @@
+const serverless = require("serverless-http");
 const express = require("express");
+const { Router } = require("express");
 const cors = require("cors");
 const { readdirSync } = require("fs");
 const { db } = require("./db/db");
@@ -17,11 +19,13 @@ readdirSync("./routes").map((route) =>
   app.use("/api/v1", require("./routes/" + route))
 );
 
-const server = () => {
-  db();
-  app.listen(PORT, () => {
-    console.log("Listening to port: ", PORT);
-  });
-};
+module.exports.handler = serverless(app);
 
-server();
+// const server = () => {
+//   db();
+//   app.listen(PORT, () => {
+//     console.log("Listening to port: ", PORT);
+//   });
+// };
+
+// server();
